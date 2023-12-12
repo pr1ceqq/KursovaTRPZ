@@ -1,0 +1,14 @@
+﻿<Window x:Class="KursovaTRPZ.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Login" Height="300" Width="400">
+    <Grid>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Label Content="Username:"/>
+            <TextBox x:Name="UsernameTextBox" Width="200" Margin="0,0,0,10"/>
+            <Label Content="Password:"/>
+            <PasswordBox x:Name="PasswordBox" Width="200" Margin="0,0,0,10"/>
+            <Button Content="Login" Width="100" Click="LoginButton_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

@@ -1,0 +1,48 @@
+﻿<Window x:Class="KursovaTRPZ.EventLogsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:KursovaTRPZ"
+        mc:Ignorable="d"
+        Title="EventLogWindow" Height="600" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
+        <DataGrid x:Name="EventLogsDataGrid" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Event Name" Binding="{Binding EventName}" />
+                <DataGridTextColumn Header="Event Time" Binding="{Binding EventTime}" />
+                <DataGridTextColumn Header="Sensor ID" Binding="{Binding Sensor_ID}" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!-- Add the StackPanel for input fields directly in the EventLogsWindow -->
+        <StackPanel x:Name="AddEventLogPanel" Visibility="Visible" VerticalAlignment="Top" HorizontalAlignment="Left" Width="250" Grid.Column="1">
+            <!-- Header for AddEventLogPanel -->
+            <StackPanel>
+                <TextBlock Text="Add Event Log" FontWeight="Bold" FontSize="16" Margin="10,10,0,10"/>
+            </StackPanel>
+
+            <!-- Content of AddEventLogPanel -->
+            <Label Content="Event Name:"/>
+            <TextBox x:Name="EventNameTextBox" Width="200" Margin="0,0,0,10"/>
+            <Label Content="Event Time:"/>
+            <DatePicker x:Name="EventTimeDatePicker" Width="200" Margin="0,0,0,10"/>
+
+            <!-- Input fields for Sensor IDs -->
+            <Label Content="Sensor ID:"/>
+            <TextBox x:Name="WeatherSensorIdTextBox" Width="200" Margin="0,0,0,10"/>
+
+            <Button Content="Add Event Log" Width="150" Click="AddEventLogButton_Click"/>
+            
+            <!-- Delete by ID button -->
+            <Label Content="Delete Event Log by ID:"/>
+            <TextBox x:Name="DeleteEventLogIdTextBox" Width="100" Margin="0,0,0,10"/>
+            <Button Content="Delete by ID" Width="150" Click="DeleteEventLogByIdButton_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>
