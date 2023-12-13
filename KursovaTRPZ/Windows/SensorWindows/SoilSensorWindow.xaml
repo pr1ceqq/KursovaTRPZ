@@ -23,23 +23,19 @@
 
         <StackPanel Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left">
             <TextBlock Text="Manage Soil Sensor" FontWeight="Bold" HorizontalAlignment="Left" FontSize="14" Margin="5,10,10,10"/>
-            <!-- Additional TextBox for pH Value -->
             <StackPanel Margin="0,10,0,10">
                 <Label Content="pH Value:"/>
                 <TextBox x:Name="PhValueTextBox" Width="160" Height="30" Margin="0,0,0,5"/>
             </StackPanel>
-            <!-- Additional TextBox for Humidity Value -->
             <StackPanel Margin="0,0,0,10">
                 <Label Content="Humidity Value:"/>
                 <TextBox x:Name="HumidityValueTextBox" Width="160" Height="30" Margin="0,0,0,5"/>
             </StackPanel>
-            <!-- Additional TextBox for Sensor Location -->
             <StackPanel Margin="0,0,0,10">
                 <Label Content="Sensor Location:"/>
                 <TextBox x:Name="SoilLocationTextBox" Width="160" Height="30" Margin="0,0,0,5"/>
             </StackPanel>
-
-            <!-- Buttons for CRUD operations -->
+            
             <Button Content="Create Sensor" Width="150" Height="30" Margin="0,0,0,10" Click="CreateSoilSensor_Click"/>
             <StackPanel Margin="0,0,0,10">
                 <Label Content="Enter Id to delete:"/>

@@ -52,7 +52,7 @@ namespace KursovaTRPZ.Windows.SensorWindows
                             };
                             dbContext.RadiationSensors.Add(newSensor);
                             dbContext.SaveChanges();
-                            DisplayRadiationSensors(); // Refresh the displayed Radiation Sensors
+                            DisplayRadiationSensors(); 
                             InfoTextBlock.Text = $"New Sensor created: Radiation Value = {RadiationValue}, Location = {location}";
                         }
                     }
@@ -73,9 +73,8 @@ namespace KursovaTRPZ.Windows.SensorWindows
             }
             else
             {
-                // Handle the case where parsing fails, show an error message, etc.
                 MessageBox.Show("Invalid Radiation Value. Please enter a valid numeric value.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                RadiationValue = 0; // Set a default value or handle it according to your logic
+                RadiationValue = 0; 
                 location = "";
                 return false;
             }
@@ -88,16 +87,14 @@ namespace KursovaTRPZ.Windows.SensorWindows
                 {
                     using (var dbContext = new MyDbContext())
                     {
-                        // Find the RadiationSensor with the specified ID
                         var sensorToDelete = dbContext.RadiationSensors.Find(sensorIdToDelete);
 
                         if (sensorToDelete != null)
                         {
-                            // Remove the RadiationSensor from the database
                             dbContext.RadiationSensors.Remove(sensorToDelete);
                             dbContext.SaveChanges();
                             MessageBox.Show("Radiation Sensor deleted successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                            DisplayRadiationSensors(); // Refresh the displayed Radiation Sensors
+                            DisplayRadiationSensors(); 
                         }
                         else
                         {

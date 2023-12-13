@@ -7,7 +7,6 @@ namespace KursovaTRPZ
 {
     public partial class EngineersWindow : Window
     {
-        // Assuming you have the Engineers collection available
         public ObservableCollection<Engineer> Engineers { get; set; }
 
         public EngineersWindow()
@@ -15,7 +14,6 @@ namespace KursovaTRPZ
             InitializeComponent();
             using (var dbContext = new MyDbContext())
             {
-                // Query the EventLogs associated with the specified adminId
                 Engineers = new ObservableCollection<Engineer>(dbContext.Engineers.Include(e => e.Auth).ToList());
                 EngineersDataGrid.ItemsSource = Engineers;
             }
@@ -30,40 +28,35 @@ namespace KursovaTRPZ
             }
             else
             {
-                // Add a new user to the collection
                 var newEngie = new Engineer
                 {
                     FirstName = FirstNameTextBox.Text,
                     LastName = LastNameTextBox.Text
                 };
-                // Save changes to the database
                 using (var dbContext = new MyDbContext())
                 {
-                    dbContext.Users.Add(newEngie); // Assuming Users includes all user types
+                    dbContext.Users.Add(newEngie); 
                     dbContext.SaveChanges();
                 }
-
-                // Add a new auth to the collection
+                
                 var newAuth = new Auth
                 {
                     Login = LoginTextBox.Text,
-                    Password = PasswordTextBox.Password, // Use Password property for security
+                    Password = PasswordTextBox.Password, 
                     UserId = newEngie.UserId
                 };
                 using (var dbContext = new MyDbContext())
                 {
-                    dbContext.Auth.Add(newAuth); // Assuming Users includes all user types
+                    dbContext.Auth.Add(newAuth); 
                     dbContext.SaveChanges();
                 }
-
-                // Clear input fields
+                
                 FirstNameTextBox.Clear();
                 LastNameTextBox.Clear();
                 LoginTextBox.Clear();
                 PasswordTextBox.Clear();
                 using (var dbContext = new MyDbContext())
                 {
-                    // Clear the existing collection and add the updated engineers
                     Engineers.Clear();
                     dbContext.Engineers.Include(e => e.Auth).ToList().ForEach(Engineers.Add);
                 }
@@ -81,8 +74,7 @@ namespace KursovaTRPZ
                     {
                         dbContext.Engineers.Remove(engineerToDelete);
                         dbContext.SaveChanges();
-
-                        // Clear the existing collection and add the updated engineers
+                        
                         Engineers.Clear();
                         dbContext.Engineers.ToList().ForEach(Engineers.Add);
 

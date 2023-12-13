@@ -21,7 +21,6 @@ namespace KursovaTRPZ
             var loginWindow = new LoginWindow();
             loginWindow.ShowDialog();
 
-            // Check if the user is authenticated and proceed accordingly
             if (loginWindow.IsAuthenticated)
             {
                 var dbContext = new MyDbContext();
@@ -31,17 +30,14 @@ namespace KursovaTRPZ
                 {
                     if (authenticatedUser is Administrator admin)
                     {
-                        // It's an Administrator
                         var userId = admin.UserId;
                         var userFirstName = admin.FirstName;
                         var userLastName = admin.LastName;
-                        // Open the InfoWindow and pass the User's information
                         var infoWindow = new InfoWindow(userId, userFirstName, userLastName);
                         infoWindow.Show();
                     }
                     else if (authenticatedUser is Engineer engineer)
                     {
-                        // It's an Engineer
                         var userId = engineer.UserId;
                         var userFirstName = engineer.FirstName;
                         var userLastName = engineer.LastName;
@@ -50,17 +46,8 @@ namespace KursovaTRPZ
                     }
 
 
-                    // Close the login window
                     loginWindow.Close();
                 }
-                else
-                {
-                    // Handle authentication failure if needed
-                }
-            }
-            else
-            {
-                // Handle authentication failure if needed
             }
         }
 

@@ -52,7 +52,7 @@ namespace KursovaTRPZ.Windows.SensorWindows
                             };
                             dbContext.WaterSensors.Add(newSensor);
                             dbContext.SaveChanges();
-                            DisplayWaterSensors(); // Refresh the displayed Water Sensors
+                            DisplayWaterSensors(); 
                             InfoTextBlock.Text = $"New Sensor created: pH Value = {waterPhValue}, Location = {location}";
                         }
                     }
@@ -73,9 +73,8 @@ namespace KursovaTRPZ.Windows.SensorWindows
             }
             else
             {
-                // Handle the case where parsing fails, show an error message, etc.
                 MessageBox.Show("Invalid pH Value. Please enter a valid numeric value.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                waterPhValue = 0; // Set a default value or handle it according to your logic
+                waterPhValue = 0; 
                 location = "";
                 return false;
             }
@@ -89,16 +88,14 @@ namespace KursovaTRPZ.Windows.SensorWindows
                 {
                     using (var dbContext = new MyDbContext())
                     {
-                        // Find the WaterSensor with the specified ID
                         var sensorToDelete = dbContext.WaterSensors.Find(sensorIdToDelete);
 
                         if (sensorToDelete != null)
                         {
-                            // Remove the WaterSensor from the database
                             dbContext.WaterSensors.Remove(sensorToDelete);
                             dbContext.SaveChanges();
                             MessageBox.Show("Water Sensor deleted successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                            DisplayWaterSensors(); // Refresh the displayed Water Sensors
+                            DisplayWaterSensors(); 
                         }
                         else
                         {

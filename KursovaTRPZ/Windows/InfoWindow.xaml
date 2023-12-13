@@ -7,9 +7,7 @@
         Title="InfoWindow" Height="200" Width="400">
     <Grid>
         <TextBlock x:Name="WelcomeMessageTextBlock" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="18" FontWeight="Bold" Margin="0,0,0,20"/>
-        <!-- Your content for InfoWindow goes here -->
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-            <!-- Horizontal StackPanel for buttons -->
             <TextBlock Text="Admin Functions" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="16"  Margin="0"/>
             <StackPanel Orientation="Horizontal">
                 <Button Content="EventLogs Menu" Click="ViewEventLogsButton_Click" Height="30" Margin="10"/>

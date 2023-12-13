@@ -10,13 +10,12 @@ namespace KursovaTRPZ
     public partial class EventLogsWindow : Window
     {
         private readonly int adminId;
-
+        private ObservableCollection<EventLog> eventLogs;
         public EventLogsWindow(int adminId)
         {
             InitializeComponent();
             this.adminId = adminId;
 
-            // Fetch and display EventLogs associated with the adminId
             DisplayEventLogs();
         }
 
@@ -26,9 +25,7 @@ namespace KursovaTRPZ
             {
                 using (var dbContext = new MyDbContext())
                 {
-                    // Query the EventLogs associated with the specified adminId
                     var eventLogs = new ObservableCollection<EventLog>(dbContext.EventLogs.Where(el => el.AdminNavigation.UserId == adminId).ToList());
-                    // Set the DataGrid's ItemsSource to the list of EventLogs
                     EventLogsDataGrid.ItemsSource = eventLogs;
                 }
             }
@@ -42,33 +39,49 @@ namespace KursovaTRPZ
         {
             try
             {
-                // Get values from the input fields
                 if (TryGetEventLogValues(out string eventName, out DateTime eventTime, out int? SensorId))
                 {
                     using (var dbContext = new MyDbContext())
                     {
-                        // Fetch the authenticated user
                         var authenticatedUser = dbContext.Users.FirstOrDefault(user => user.UserId == adminId);
-        
+                        var sensor = dbContext.Sensors.Find(SensorId);
+                        var EventContext = "";
+                        if (sensor != null)
+                        {
+                            if (sensor is SoilSensor soilSensor)
+                            {
+                                EventContext = $"Soil Sensor - pH Value: {soilSensor.Ph_Value}, Humidity Value: {soilSensor.Humidity_Value}, Location: {soilSensor.Sensor_Location}";
+                            }
+                            else if (sensor is WaterSensor waterSensor)
+                            {
+                                EventContext = $"Water Sensor - pH Value: {waterSensor.Ph_Value}, Location: {waterSensor.Sensor_Location}";
+                            }
+                            else if (sensor is RadiationSensor radiationSensor)
+                            {
+                                EventContext = $"Radiation Sensor - Radiation Value: {radiationSensor.Radiation_Value}, Location: {radiationSensor.Sensor_Location}";
+                            }
+                            else if (sensor is MotionSensor motionSensor)
+                            {
+                                EventContext = $"Motion Sensor - Motion Value: {motionSensor.MotionSensor_Value}, Location: {motionSensor.Sensor_Location}";
+                            }
+                        }
                         if (IsAuthorized(authenticatedUser))
                         {
-                            // It's an Administrator, allow adding EventLog
                             var newEventLog = new EventLog
                             {
                                 EventName = eventName,
                                 EventTime = eventTime,
                                 AdminNavigation = (Administrator)authenticatedUser,
-                                Sensor_ID = SensorId
+                                Sensor_ID = SensorId,
+                                Event_Context = EventContext
                             };
         
-                            // Add the new EventLog to the database
                             dbContext.EventLogs.Add(newEventLog);
                             dbContext.SaveChanges();
                             MessageBox.Show("Event Log added successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                         }
                         else
                         {
-                            // Handle unauthorized access
                             MessageBox.Show("Authentication failed or unauthorized access", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                         }
                     }
@@ -82,14 +95,12 @@ namespace KursovaTRPZ
         
         private bool TryGetEventLogValues(out string eventName, out DateTime eventTime, out int? SensorId)
         {
-            // Initialize output variables
             eventName = EventNameTextBox.Text;
-            eventTime = EventTimeDatePicker.SelectedDate ?? DateTime.Now; // Default to current date if not selected
+            eventTime = EventTimeDatePicker.SelectedDate ?? DateTime.Now; 
             SensorId = TryParseSensorId(WeatherSensorIdTextBox.Text);
+            
         
-            // Add validation logic if needed
-        
-            return true; // Assuming the values are always valid for now
+            return true; 
         }
 
 private int? TryParseSensorId(string input)
@@ -104,7 +115,6 @@ private int? TryParseSensorId(string input)
         return result;
     }
 
-    // Handle invalid input
     MessageBox.Show($"Invalid sensor ID: {input}. Please enter a valid numeric ID.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
     return null;
 }
@@ -122,16 +132,14 @@ private bool IsAuthorized(User authenticatedUser)
                 {
                     using (var dbContext = new MyDbContext())
                     {
-                        // Find the EventLog with the specified ID
                         var eventLogToDelete = dbContext.EventLogs.Find(eventIdToDelete);
 
                         if (eventLogToDelete != null)
                         {
-                            // Remove the EventLog from the database
                             dbContext.EventLogs.Remove(eventLogToDelete);
                             dbContext.SaveChanges();
                             MessageBox.Show("Event Log deleted successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                            DisplayEventLogs(); // Refresh the displayed EventLogs
+                            DisplayEventLogs(); 
                         }
                         else
                         {

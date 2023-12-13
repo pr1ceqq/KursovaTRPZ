@@ -21,4 +21,5 @@ public class EventLog
 
     // Navigation property for the many-to-one relationship
     public virtual Administrator AdminNavigation { get; set; }
+    public string Event_Context { get; set; }
 }

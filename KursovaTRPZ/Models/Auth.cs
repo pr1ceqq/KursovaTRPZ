@@ -13,6 +13,6 @@ public class Auth
     [ForeignKey("User")]
     public int UserId { get; set; }
 
-    // Navigation property for the one-to-one relationship
+    //one-to-one relationship
     public User User { get; set; }
 }

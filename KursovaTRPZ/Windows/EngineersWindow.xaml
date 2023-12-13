@@ -10,14 +10,12 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="200" />
         </Grid.ColumnDefinitions>
-
-        <!-- DataGrid on the left side -->
+        
         <DataGrid x:Name="EngineersDataGrid" AutoGenerateColumns="False" Grid.Column="0">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="User ID" Binding="{Binding UserId}" />
                 <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}" />
                 <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" />
-                <!-- Use a DataGridTemplateColumn for nested properties -->
                 <DataGridTemplateColumn Header="Login">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -35,30 +33,25 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-
-        <!-- Panel on the right side for adding a new engineer -->
+        
         <StackPanel Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10">
             <TextBlock Text="Add New Engineer" FontSize="16" FontWeight="Bold" Margin="0,0,0,10"/>
             
-            <!-- Additional TextBox for First Name -->
             <StackPanel Margin="0,0,0,10">
                 <Label Content="First Name:"/>
                 <TextBox x:Name="FirstNameTextBox" Width="180" Height="30" Margin="0,0,0,5"/>
             </StackPanel>
             
-            <!-- Additional TextBox for Last Name -->
             <StackPanel Margin="0,0,0,10">
                 <Label Content="Last Name:"/>
                 <TextBox x:Name="LastNameTextBox" Width="180" Height="30" Margin="0,0,0,5"/>
             </StackPanel>
-
-            <!-- Additional TextBox for Login -->
+            
             <StackPanel Margin="0,0,0,10">
                 <Label Content="Login:"/>
                 <TextBox x:Name="LoginTextBox" Width="180" Height="30" Margin="0,0,0,5"/>
             </StackPanel>
-
-            <!-- Additional TextBox for Password -->
+            
             <StackPanel Margin="0,0,0,10">
                 <Label Content="Password:"/>
                 <PasswordBox x:Name="PasswordTextBox" Width="180" Height="30" Margin="0,0,0,5"/>

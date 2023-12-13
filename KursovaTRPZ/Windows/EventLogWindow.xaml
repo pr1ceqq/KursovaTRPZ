@@ -14,32 +14,29 @@
 
         <DataGrid x:Name="EventLogsDataGrid" AutoGenerateColumns="False">
             <DataGrid.Columns>
+                <DataGridTextColumn Header="Event ID" Binding="{Binding Event_ID}" />
                 <DataGridTextColumn Header="Event Name" Binding="{Binding EventName}" />
                 <DataGridTextColumn Header="Event Time" Binding="{Binding EventTime}" />
                 <DataGridTextColumn Header="Sensor ID" Binding="{Binding Sensor_ID}" />
+                <DataGridTextColumn Header="Event Context" Binding="{Binding Event_Context}" />
             </DataGrid.Columns>
         </DataGrid>
 
-        <!-- Add the StackPanel for input fields directly in the EventLogsWindow -->
         <StackPanel x:Name="AddEventLogPanel" Visibility="Visible" VerticalAlignment="Top" HorizontalAlignment="Left" Width="250" Grid.Column="1">
-            <!-- Header for AddEventLogPanel -->
             <StackPanel>
                 <TextBlock Text="Add Event Log" FontWeight="Bold" FontSize="16" Margin="10,10,0,10"/>
             </StackPanel>
 
-            <!-- Content of AddEventLogPanel -->
             <Label Content="Event Name:"/>
             <TextBox x:Name="EventNameTextBox" Width="200" Margin="0,0,0,10"/>
             <Label Content="Event Time:"/>
             <DatePicker x:Name="EventTimeDatePicker" Width="200" Margin="0,0,0,10"/>
 
-            <!-- Input fields for Sensor IDs -->
             <Label Content="Sensor ID:"/>
             <TextBox x:Name="WeatherSensorIdTextBox" Width="200" Margin="0,0,0,10"/>
 
             <Button Content="Add Event Log" Width="150" Click="AddEventLogButton_Click"/>
             
-            <!-- Delete by ID button -->
             <Label Content="Delete Event Log by ID:"/>
             <TextBox x:Name="DeleteEventLogIdTextBox" Width="100" Margin="0,0,0,10"/>
             <Button Content="Delete by ID" Width="150" Click="DeleteEventLogByIdButton_Click"/>

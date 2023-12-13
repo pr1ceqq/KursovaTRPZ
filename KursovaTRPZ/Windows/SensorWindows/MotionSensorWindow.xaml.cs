@@ -89,16 +89,14 @@ namespace KursovaTRPZ.Windows.SensorWindows
                 {
                     using (var dbContext = new MyDbContext())
                     {
-                        // Find the MotionSensor with the specified ID
                         var sensorToDelete = dbContext.MotionSensors.Find(sensorIdToDelete);
 
                         if (sensorToDelete != null)
                         {
-                            // Remove the MotionSensor from the database
                             dbContext.MotionSensors.Remove(sensorToDelete);
                             dbContext.SaveChanges();
                             MessageBox.Show("Motion Sensor deleted successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                            DisplayMotionSensors(); // Refresh the displayed Motion Sensors
+                            DisplayMotionSensors(); 
                         }
                         else
                         {

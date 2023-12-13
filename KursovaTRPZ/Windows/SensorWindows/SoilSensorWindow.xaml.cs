@@ -53,7 +53,7 @@ namespace KursovaTRPZ.Windows.SensorWindows
                             };
                             dbContext.SoilSensors.Add(newSensor);
                             dbContext.SaveChanges();
-                            DisplaySoilSensors(); // Refresh the displayed Soil Sensors
+                            DisplaySoilSensors(); 
                             InfoTextBlock.Text = $"New Sensor created: pH Value = {pHValue}, Humidity Value = {humidityValue}, Location = {location}";
                         }
                     }
@@ -74,10 +74,9 @@ namespace KursovaTRPZ.Windows.SensorWindows
             }
             else
             {
-                // Handle the case where parsing fails, show an error message, etc.
                 MessageBox.Show("Invalid pH or Humidity Value. Please enter valid numeric values.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                pHValue = 0; // Set a default value or handle it according to your logic
-                humidityValue = 0; // Set a default value or handle it according to your logic
+                pHValue = 0; 
+                humidityValue = 0; 
                 location = "";
                 return false;
             }
@@ -91,16 +90,14 @@ namespace KursovaTRPZ.Windows.SensorWindows
                 {
                     using (var dbContext = new MyDbContext())
                     {
-                        // Find the SoilSensor with the specified ID
                         var sensorToDelete = dbContext.SoilSensors.Find(sensorIdToDelete);
 
                         if (sensorToDelete != null)
                         {
-                            // Remove the SoilSensor from the database
                             dbContext.SoilSensors.Remove(sensorToDelete);
                             dbContext.SaveChanges();
                             MessageBox.Show("Soil Sensor deleted successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                            DisplaySoilSensors(); // Refresh the displayed Soil Sensors
+                            DisplaySoilSensors(); 
                         }
                         else
                         {
