@@ -13,7 +13,7 @@
         
         <DataGrid x:Name="EngineersDataGrid" AutoGenerateColumns="False" Grid.Column="0">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="User ID" Binding="{Binding UserId}" />
+                <DataGridTextColumn Header="Engineer ID" Binding="{Binding UserId}" />
                 <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}" />
                 <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" />
                 <DataGridTemplateColumn Header="Login">

@@ -2,7 +2,7 @@
 
 namespace KursovaTRPZ
 {
-    public partial class InfoWindow : Window
+    public partial class AdminWindow : Window
     {
         // Add properties to store administrator information
         public int AdminId { get; set; }
@@ -10,7 +10,7 @@ namespace KursovaTRPZ
         public string AdminLastName { get; set; }
 
         // Constructor that takes parameters
-        public InfoWindow(int adminId, string adminFirstName, string adminLastName)
+        public AdminWindow(int adminId, string adminFirstName, string adminLastName)
         {
             InitializeComponent();
 
@@ -29,8 +29,15 @@ namespace KursovaTRPZ
 
         private void ShowEngineersButton_Click(object sender, RoutedEventArgs e)
         {
-            var engineersWindow = new EngineersWindow();
+            var engineersWindow = new EngineersWindow(AdminId);
             engineersWindow.Show();
+        }
+
+        private void Logout_Click(object sender, RoutedEventArgs e)
+        {
+            LoginWindow loginWindow = new LoginWindow();
+            loginWindow.Show();
+            this.Close();
         }
     }
 }

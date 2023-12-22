@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Login" Height="300" Width="400">
     <Grid>
+        <TextBlock Text="Login with Engineer or Administrator credentials" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="16"  Margin="10"/>
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
             <Label Content="Username:"/>
             <TextBox x:Name="UsernameTextBox" Width="200" Margin="0,0,0,10"/>

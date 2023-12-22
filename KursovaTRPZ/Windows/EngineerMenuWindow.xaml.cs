@@ -41,5 +41,11 @@ namespace KursovaTRPZ
             MotionSensorWindow motionSensorWindow = new MotionSensorWindow(Id);
             motionSensorWindow.Show();
         }
+        private void Logout_Click(object sender, RoutedEventArgs e)
+        {
+            LoginWindow loginWindow = new LoginWindow();
+            loginWindow.Show();
+            this.Close();
+        }
     }
 }

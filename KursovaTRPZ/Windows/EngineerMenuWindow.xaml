@@ -23,5 +23,6 @@
                 <Button Content="Motion Sensor" Width="150" Height="30" Margin="0,0,0,10" Click="ShowMotionSensorWindow"/>
             </StackPanel>
         </Grid>
+        <Button Content="Log out" Width="100" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="Logout_Click"/>
     </Grid>
 </Window>

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace KursovaTRPZ.Models
 {
@@ -17,19 +18,35 @@ namespace KursovaTRPZ.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            // Replace "your_connection_string" with your actual connection string
             optionsBuilder.UseSqlServer("Server=DESKTOP-LK2DBBD;Database=SmartEnv;Integrated Security=True;Encrypt=False;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            
+            modelBuilder.Entity<User>()
+                .Property(u => u.UserId)
+                .ValueGeneratedNever();
+            
+            modelBuilder.Entity<Engineer>()
+                .HasMany(e => e.Sensors)
+                .WithOne(s => s.Engineer)
+                .OnDelete(DeleteBehavior.Restrict);
 
-            // Configure one-to-many relationship between Administrator and EventLog
-            modelBuilder.Entity<EventLog>()
-                .HasOne(e => e.AdminNavigation)
-                .WithMany(a => a.EventLogs)
-                .HasForeignKey(e => e.Id)
+            modelBuilder.Entity<Administrator>()
+                .HasMany(a => a.EventLogs)
+                .WithOne(el => el.AdminNavigation)
+                .OnDelete(DeleteBehavior.Restrict);
+            
+            modelBuilder.Entity<Administrator>()
+                .HasMany(a => a.Engineers)  
+                .WithOne(e => e.Administrator)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Sensor>()
+                .HasMany(s => s.EventLogs)
+                .WithOne(el => el.Sensor)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }

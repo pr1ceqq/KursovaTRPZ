@@ -14,14 +14,6 @@ namespace KursovaTRPZ
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-
-            // Create an instance of your database context
-            using (var dbContext = new MyDbContext())
-            {
-                // Seed data
-                var dataSeeder = new DataSeeder(dbContext);
-                dataSeeder.SeedData();
-            }
         }
     }
 }

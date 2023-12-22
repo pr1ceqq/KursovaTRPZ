@@ -7,58 +7,63 @@ namespace KursovaTRPZ
 {
     public partial class EngineersWindow : Window
     {
+        private int adminId;
         public ObservableCollection<Engineer> Engineers { get; set; }
 
-        public EngineersWindow()
+        public EngineersWindow(int currentAdminId)
         {
+            adminId = currentAdminId;
             InitializeComponent();
             using (var dbContext = new MyDbContext())
             {
-                Engineers = new ObservableCollection<Engineer>(dbContext.Engineers.Include(e => e.Auth).ToList());
+                Engineers = new ObservableCollection<Engineer>(dbContext.Engineers
+                                                                                .Include(e => e.Auth)
+                                                                                .Where(el => el.Administrator.UserId == adminId)
+                                                                                .ToList());
                 EngineersDataGrid.ItemsSource = Engineers;
             }
         }
 
         private void AddEngineerButton_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(FirstNameTextBox.Text) || string.IsNullOrWhiteSpace(LastNameTextBox.Text) ||
-                string.IsNullOrWhiteSpace(LoginTextBox.Text) || string.IsNullOrEmpty(PasswordTextBox.Password))
+            using (var dbContext = new MyDbContext())
             {
-                MessageBox.Show("Fill all pls!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            else
-            {
-                var newEngie = new Engineer
+                int newUserId = dbContext.Users.Max(u => (int?)u.UserId) ?? 0;
+                newUserId++;
+                if (string.IsNullOrWhiteSpace(FirstNameTextBox.Text) ||
+                    string.IsNullOrWhiteSpace(LastNameTextBox.Text) ||
+                    string.IsNullOrWhiteSpace(LoginTextBox.Text) || string.IsNullOrEmpty(PasswordTextBox.Password))
                 {
-                    FirstName = FirstNameTextBox.Text,
-                    LastName = LastNameTextBox.Text
-                };
-                using (var dbContext = new MyDbContext())
-                {
-                    dbContext.Users.Add(newEngie); 
-                    dbContext.SaveChanges();
+                    MessageBox.Show("Fill all pls!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-                
-                var newAuth = new Auth
+                else
                 {
-                    Login = LoginTextBox.Text,
-                    Password = PasswordTextBox.Password, 
-                    UserId = newEngie.UserId
-                };
-                using (var dbContext = new MyDbContext())
-                {
-                    dbContext.Auth.Add(newAuth); 
-                    dbContext.SaveChanges();
-                }
-                
-                FirstNameTextBox.Clear();
-                LastNameTextBox.Clear();
-                LoginTextBox.Clear();
-                PasswordTextBox.Clear();
-                using (var dbContext = new MyDbContext())
-                {
-                    Engineers.Clear();
-                    dbContext.Engineers.Include(e => e.Auth).ToList().ForEach(Engineers.Add);
+                    var newEngie = new Engineer
+                    {
+                        UserId = newUserId,
+                        FirstName = FirstNameTextBox.Text,
+                        LastName = LastNameTextBox.Text,
+                        Administrator = dbContext.Administrators.First(a => a.UserId == adminId)
+                    };
+                        dbContext.Users.Add(newEngie);
+                        dbContext.SaveChanges();
+                    var newAuth = new Auth
+                    {
+                        Login = LoginTextBox.Text,
+                        Password = PasswordTextBox.Password,
+                        UserId = newEngie.UserId
+                    };
+                        dbContext.Auth.Add(newAuth);
+                        dbContext.SaveChanges();
+
+                    FirstNameTextBox.Clear();
+                    LastNameTextBox.Clear();
+                    LoginTextBox.Clear();
+                    PasswordTextBox.Clear();
+                        Engineers.Clear();
+                        dbContext.Engineers.Include(e => e.Auth).ToList().ForEach(Engineers.Add);
+                        Engineers = new ObservableCollection<Engineer>(dbContext.Engineers.Include(e => e.Auth).Where(el => el.Administrator.UserId == adminId).ToList());
+                        EngineersDataGrid.ItemsSource = Engineers;
                 }
             }
         }
@@ -79,6 +84,9 @@ namespace KursovaTRPZ
                         dbContext.Engineers.ToList().ForEach(Engineers.Add);
 
                         MessageBox.Show($"Engineer with ID {engineerIdToDelete} deleted successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                        Engineers = new ObservableCollection<Engineer>(dbContext.Engineers.Include(e => e.Auth).Where(el => el.Administrator.UserId == adminId).ToList());
+                        EngineersDataGrid.ItemsSource = Engineers;
+                        
                     }
                     else
                     {

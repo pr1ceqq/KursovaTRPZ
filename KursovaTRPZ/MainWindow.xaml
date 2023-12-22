@@ -8,5 +8,6 @@
         Title="MainWindow" Height="200" Width="200">
     <Grid>
         <Button Content="Go to Login Page" Click="GoToLoginPage_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10"/>
+        <TextBlock Text="Enter as Guest" Foreground="Blue" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10" MouseDown="EnterAsGuest_Click"/>
     </Grid>
 </Window>

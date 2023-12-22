@@ -7,6 +7,6 @@ namespace KursovaTRPZ.Models;
 
 public class Administrator : User
 {
-    //the one-to-many relationship
+    public ICollection<Engineer> Engineers { get; set; }
     public ICollection<EventLog> EventLogs { get; set; }
 }

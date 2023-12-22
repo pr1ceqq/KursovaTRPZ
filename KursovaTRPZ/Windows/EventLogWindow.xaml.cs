@@ -102,28 +102,28 @@ namespace KursovaTRPZ
         
             return true; 
         }
-
-private int? TryParseSensorId(string input)
-{
-    if (string.IsNullOrWhiteSpace(input))
-    {
-        return null;
-    }
-
-    if (int.TryParse(input, out int result))
-    {
-        return result;
-    }
-
-    MessageBox.Show($"Invalid sensor ID: {input}. Please enter a valid numeric ID.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-    return null;
-}
-
-private bool IsAuthorized(User authenticatedUser)
-{
-    return authenticatedUser != null && authenticatedUser is Administrator;
-}
-
+        
+        private int? TryParseSensorId(string input)
+        {
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                return null;
+            }
+        
+            if (int.TryParse(input, out int result))
+            {
+                return result;
+            }
+        
+            MessageBox.Show($"Invalid sensor ID: {input}. Please enter a valid numeric ID.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            return null;
+        }
+        
+        private bool IsAuthorized(User authenticatedUser)
+        {
+            return authenticatedUser != null && authenticatedUser is Administrator;
+        }
+        
         private void DeleteEventLogByIdButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -133,7 +133,7 @@ private bool IsAuthorized(User authenticatedUser)
                     using (var dbContext = new MyDbContext())
                     {
                         var eventLogToDelete = dbContext.EventLogs.Find(eventIdToDelete);
-
+        
                         if (eventLogToDelete != null)
                         {
                             dbContext.EventLogs.Remove(eventLogToDelete);

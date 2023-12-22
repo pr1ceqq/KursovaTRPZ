@@ -1,10 +1,10 @@
-﻿<Window x:Class="KursovaTRPZ.InfoWindow"
+﻿<Window x:Class="KursovaTRPZ.AdminWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="InfoWindow" Height="200" Width="400">
+        Title="AdminWindow" Height="200" Width="400">
     <Grid>
         <TextBlock x:Name="WelcomeMessageTextBlock" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="18" FontWeight="Bold" Margin="0,0,0,20"/>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -14,5 +14,6 @@
                 <Button Content="Engineers Menu" Click="ShowEngineersButton_Click" Height="30" Margin="10"/>
             </StackPanel>
         </StackPanel>
+        <Button Content="Log out" Width="100" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="Logout_Click"/>
     </Grid>
 </Window>

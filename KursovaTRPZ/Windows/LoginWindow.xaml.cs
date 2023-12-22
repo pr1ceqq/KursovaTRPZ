@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Windows;
 using System.Linq;
 using KursovaTRPZ.Models;
 using System.Windows;
@@ -38,9 +39,26 @@ namespace KursovaTRPZ
                     {
                         Admin_Id = authenticatedUser.UserId;
                     }
+                    var User = dbContext.Users.FirstOrDefault(user => user.UserId == Admin_Id);
+                    if (User is Administrator admin)
+                    {
+                        var userId = admin.UserId;
+                        var userFirstName = admin.FirstName;
+                        var userLastName = admin.LastName;
+                        var infoWindow = new AdminWindow(userId, userFirstName, userLastName);
+                        infoWindow.Show();
+                        this.Close(); 
+                    }
+                    else if (User is Engineer engineer)
+                    {
+                        var userId = engineer.UserId;
+                        var userFirstName = engineer.FirstName;
+                        var userLastName = engineer.LastName;
+                        var EngieWindow = new EngineerMenuWindow(userId, userFirstName, userLastName);
+                        EngieWindow.Show();
+                        this.Close(); 
+                    }
                 }
-
-                // If authentication succeeds, close the login window
                 Close();
             }
             else
@@ -48,15 +66,13 @@ namespace KursovaTRPZ
                 MessageBox.Show("Invalid credentials. Please try again.");
             }
         }
-
+        
         private bool AuthenticateUser(string username, string password)
         {
             using (var dbContext = new MyDbContext())
             {
-                // Query the Auth table to find a match for the provided username and password
                 var user = dbContext.Auth.FirstOrDefault(u => u.Login == username && u.Password == password);
-
-                // Set the authentication status
+                
                 IsAuthenticated = user != null;
 
                 return IsAuthenticated;
